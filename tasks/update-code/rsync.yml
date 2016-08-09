@@ -10,14 +10,7 @@
 
 - name: ANSISTRANO | RSYNC | Rsync application files to remote shared copy
   shell: >
-    rsync -vlzrtogp --progress --delete --password-file=/etc/app.pas
-    --exclude=*.swp --exclude=.git --exclude=.node --exclude=scripts
-    --exclude=dev --exclude=run --exclude=v8.log --exclude=fabfile.py
-    --exclude=*.pyc --exclude=.dir-locals.el --exclude=.gitignore
-    --exclude=.jscsrc --exclude=.jshintrc --exclude=.projectile
-    --exclude=.tm_properties --exclude=README.md --exclude=gulpfile.js
-    --exclude=conf/*.js --exclude=deploy --exclude=test
-    --exclude=.pm2 {{ rsync_src }} {{ ansistrano_shared_rsync_copy_path.stdout }}
+    rsync {{ ansistrano_rsync_opts }} {{ ansistrano_rsync_src }} {{ ansistrano_shared_rsync_copy_path.stdout }}
   args:
     chdir: "{{ ansistrano_shared_rsync_copy_path.stdout }}"
     executable: /bin/bash
