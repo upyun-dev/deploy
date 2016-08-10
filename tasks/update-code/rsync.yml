@@ -3,7 +3,7 @@
 - name: ANSISTRANO | RSYNC | Rsync application files to remote shared copy
   shell: rsync {{ ansistrano_rsync_opts }} {{ ansistrano_rsync_src }} {{ ansistrano_tmp.stdout }}
   args:
-    chdir: "{{ ansistrano_tmp.stdout }}"
+    chdir: "{{ dest }}"
     executable: /bin/bash
 
 - name: ANSISTRANO | RSYNC | Get shared path (in rsync case)
