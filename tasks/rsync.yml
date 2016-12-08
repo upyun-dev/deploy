@@ -1,0 +1,64 @@
+---
+# - name: UPYUN-DEV-DEPLOY | 设置 .shared-copy 目录
+#   command: echo "{{ ansistrano_shared_path.stdout }}/.shared-copy"
+#   register: ansistrano_shared_rsync_copy_path
+
+# - name: "UPYUN-DEV-DEPLOY | 创建 .shared-copy 目录: {{ ansistrano_shared_rsync_copy_path.stdout }}"
+#   file:
+#     state: directory
+#     path: "{{ ansistrano_shared_rsync_copy_path.stdout }}"
+
+- name: "UPYUN-DEV-DEPLOY | rsync 从 {{ ansistrano_rsync_src }} 同步代码到 {{ ansistrano_deploy_to }}"
+  shell: rsync {{ ansistrano_rsync_opts }} {{ ansistrano_rsync_src }} {{ ansistrano_deploy_to }}
+  args:
+    chdir: "{{ ansistrano_deploy_to }}"
+    executable: /bin/bash
+
+# - name: "UPYUN-DEV-DEPLOY | 从 {{ git_repository }} 克隆源码到 {{ ansistrano_shared_rsync_copy_path.stdout }}"
+#   git:
+#     repo: "{{ git_repository }}"
+#     dest: "{{ ansistrano_shared_rsync_copy_path.stdout }}"
+
+- name: "UPYUN-DEV-DEPLOY | 拷贝 project 中的项目源码到 {{ ansistrano_release_path.stdout }}"
+  copy:
+    directory_mode: yes
+    src: "{{ ansistrano_deploy_to }}/project/"
+    dest: "{{ ansistrano_release_path.stdout }}"
+  # shell: >
+  #   for i in $(ls -A {{ ansistrano_tmp.stdout }}/current); do
+  #     [[ -d {{ ansistrano_shared_rsync_copy_path.stdout }}/$i ]] && rm -rf {{ ansistrano_shared_rsync_copy_path.stdout }}/$i;
+  #     mv -f {{ ansistrano_tmp.stdout }}/current/$i {{ ansistrano_shared_rsync_copy_path.stdout }};
+  #   done
+  # args:
+  #   executable: /bin/bash
+
+- name: UPYUN-DEV-DEPLOY | 删除 project 目录
+  file:
+    state: absent
+    path: "{{ ansistrano_deploy_to }}/project"
+
+# - name: UPYUN-DEV-DEPLOY | RSYNC | mv others to deploy path
+#   # shell: mv -f {{ ansistrano_tmp.stdout }}/* {{ ansistrano_deploy_to }}
+#   shell: >
+#     for i in $(ls -A {{ ansistrano_tmp.stdout }}); do
+#       [[ -d {{ ansistrano_deploy_to }}/$i ]] && rm -rf {{ ansistrano_deploy_to }}/$i;
+#       mv -f {{ ansistrano_tmp.stdout }}/$i {{ ansistrano_deploy_to }};
+#     done
+#   args:
+#     executable: /bin/bash
+
+# - name: "UPYUN-DEV-DEPLOY | 拷贝 .shared-copy 中的项目源码到 {{ ansistrano_release_path.stdout }}"
+#   copy:
+#     directory_mode: yes
+#     src: "{{ ansistrano_shared_rsync_copy_path.stdout }}/"
+#     dest: "{{ ansistrano_release_path.stdout }}"
+  # command: cp -a {{ ansistrano_shared_rsync_copy_path.stdout }} {{ ansistrano_release_path.stdout }}
+
+# - name: UPYUN-DEV-DEPLOY | RSYNC | rm .shared-copy
+#   shell: rm -rf {{ ansistrano_shared_rsync_copy_path.stdout }}
+
+# - name: UPYUN-DEV-DEPLOY | RSYNC | clean {{ ansistrano_tmp.stdout }}
+#   file:
+#     state: absent
+#     path: "{{ ansistrano_tmp.stdout }}"
+#   when: not save_tmp

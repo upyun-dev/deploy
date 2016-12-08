@@ -1,18 +1,15 @@
 ---
-
-# Migration check from rsync deployment
 - stat:
     path: "{{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}"
   register: stat_current_dir
 
-- name: ANSISTRANO | Remove current folder if it's a directory
+- name: UPYUN-DEV-DEPLOY | 删除 current 目录 (如果 current 不是符号链接)
   file:
     state: absent
     path: "{{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}"
   when: stat_current_dir.stat.isdir is defined and stat_current_dir.stat.isdir
 
-# Performs symlink exchange
-- name: ANSISTRANO | Change softlink to new release
+- name: UPYUN-DEV-DEPLOY | current 符号链接指向新的代码版本
   file:
     state: link
     path: "{{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}"

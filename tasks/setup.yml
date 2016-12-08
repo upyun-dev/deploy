@@ -1,33 +1,33 @@
 ---
 # Setup folders
-- name: ANSISTRANO | Ensure deployment base path exists
+- name: "UPYUN-DEV-DEPLOY | 创建项目根目录: {{ ansistrano_deploy_to }}"
   file:
     state: directory
-    path: "{{ dest }}"
+    path: "{{ ansistrano_deploy_to }}"
 
-- name: ANSISTRANO | Set releases path
+- name: UPYUN-DEV-DEPLOY | 设置发布版本目录
   command: echo "{{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }}"
   register: ansistrano_releases_path
 
-- name: ANSISTRANO | Set shared path
+- name: UPYUN-DEV-DEPLOY | 设置共享目录
   command: echo "{{ ansistrano_deploy_to }}/shared"
   register: ansistrano_shared_path
 
-- name: ANSISTRANO | Set tmp path
+- name: UPYUN-DEV-DEPLOY | 设置临时目录
   command: echo "{{ dest }}/tmp"
   register: ansistrano_tmp
 
-- name: ANSISTRANO | Ensure tmp path exists
-  file:
-    state: directory
-    path: "{{ ansistrano_tmp.stdout }}"
+# - name: "UPYUN-DEV-DEPLOY | 创建临时目录: {{ ansistrano_tmp.stdout }}"
+#   file:
+#     state: directory
+#     path: "{{ ansistrano_tmp.stdout }}"
 
-- name: ANSISTRANO | Ensure releases folder exists
+- name: "UPYUN-DEV-DEPLOY | 创建发布版本目录: {{ ansistrano_releases_path.stdout }}"
   file:
     state: directory
     path: "{{ ansistrano_releases_path.stdout }}"
 
-- name: ANSISTRANO | Ensure shared elements folder exists
-  file:
-    state: directory
-    path: "{{ ansistrano_shared_path.stdout }}"
+# - name: "UPYUN-DEV-DEPLOY | 创建共享目录 {{ ansistrano_shared_path.stdout }}"
+#   file:
+#     state: directory
+#     path: "{{ ansistrano_shared_path.stdout }}"

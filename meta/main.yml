@@ -1,45 +1,7 @@
 ---
 galaxy_info:
   author: abbshr
-  description: Ansible role to deploy scripting applications like PHP, Python, Ruby, etc. in a Capistrano style
-  company: Ansistrano
+  description: UPYUN Node.js application version control utility (deploy)
+  company: UPYUN
   license: MIT
-  min_ansible_version: 1.8
-  platforms:
-  - name: EL
-    versions:
-    - all
-  - name: GenericUNIX
-    versions:
-    - all
-  - name: Fedora
-    versions:
-    - all
-  - name: opensuse
-    versions:
-    - all
-  - name: Amazon
-    versions:
-    - all
-  - name: GenericBSD
-    versions:
-    - all
-  - name: FreeBSD
-    versions:
-    - all
-  - name: Ubuntu
-    versions:
-    - all
-  - name: SLES
-    versions:
-    - all
-  - name: GenericLinux
-    versions:
-    - all
-  - name: Debian
-    versions:
-    - all
-  categories:
-  - cloud
-  - web
-dependencies: []
+  min_ansible_version: 2.0
