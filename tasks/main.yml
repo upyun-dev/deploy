@@ -5,9 +5,6 @@
 # 同步代码到目标位置, 执行部署流程
 - include: update-code.yml
 
-# 链接版本间共享数据到发布的版本
-# - include: symlink-shared.yml
-
 # 链接发布的版本到 current
 - include: symlink.yml
 - include: cleanup.yml
