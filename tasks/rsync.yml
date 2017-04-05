@@ -1,14 +1,14 @@
 ---
-- name: "UPYUN-DEV-DEPLOY | rsync 从 {{ ansistrano_rsync_src }} 同步代码到 {{ ansistrano_deploy_to }}"
-  shell: rsync {{ ansistrano_rsync_extra_params }} {{ ansistrano_rsync_src }} {{ ansistrano_deploy_to }}
+- name: "UPYUN-DEV-DEPLOY | rsync 从 {{ updeployment_rsync_src }} 同步代码到 {{ updeployment_deploy_to }}"
+  shell: rsync {{ updeployment_rsync_extra_params }} {{ updeployment_rsync_src }} {{ updeployment_deploy_to }}
   args:
-    chdir: "{{ ansistrano_deploy_to }}"
+    chdir: "{{ updeployment_deploy_to }}"
     executable: /bin/bash
 
-- name: "UPYUN-DEV-DEPLOY | 拷贝 project 中的项目源码到 {{ ansistrano_release_path.stdout }}"
-  command: cp -a {{ ansistrano_deploy_to }}/project {{ ansistrano_release_path.stdout }}
+- name: "UPYUN-DEV-DEPLOY | 拷贝 project 中的项目源码到 {{ updeployment_release_path.stdout }}"
+  command: cp -a {{ updeployment_deploy_to }}/project {{ updeployment_release_path.stdout }}
 
 - name: UPYUN-DEV-DEPLOY | 删除 project 目录
   file:
     state: absent
-    path: "{{ ansistrano_deploy_to }}/project"
+    path: "{{ updeployment_deploy_to }}/project"

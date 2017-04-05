@@ -19,21 +19,21 @@ for internal used.
 ## variables
 
 ```yml
-ansistrano_rsync_src: "localhost"
-ansistrano_rsync_extra_params: ""
+updeployment_rsync_src: "localhost"
+updeployment_rsync_extra_params: ""
 
 # Path where the code must be deployed to
-ansistrano_deploy_to: "/var/www/my-app"
+updeployment_deploy_to: "/var/www/my-app"
 
 # Folder name for the releases
-ansistrano_version_dir: "releases"
+updeployment_version_dir: "releases"
 
 # Softlink name for the current release
-ansistrano_current_dir: "current"
+updeployment_current_dir: "current"
 
 # Current directory deployment strategy
-ansistrano_current_via: "symlink"
+updeployment_current_via: "symlink"
 
 # Number of releases to keep in your hosts, if 0, unlimited releases will be kept
-ansistrano_keep_releases: 0
+updeployment_keep_releases: 0
 ```
