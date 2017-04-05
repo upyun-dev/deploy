@@ -13,15 +13,6 @@
   command: echo "{{ deploy_to }}/shared"
   register: deploy_shared_path
 
-- name: UPYUN-DEV-DEPLOY | 设置临时目录
-  command: echo "{{ dest }}/tmp"
-  register: deploy_tmp
-
-# - name: "UPYUN-DEV-DEPLOY | 创建临时目录: {{ deploy_tmp.stdout }}"
-#   file:
-#     state: directory
-#     path: "{{ deploy_tmp.stdout }}"
-
 - name: "UPYUN-DEV-DEPLOY | 创建发布版本目录: {{ deploy_releases_path.stdout }}"
   file:
     state: directory
