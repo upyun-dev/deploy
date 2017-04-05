@@ -5,47 +5,47 @@
 - name: UPYUN-DEV-DEPLOY | Ensure shared paths targets are absent
   file:
     state: absent
-    path: "{{ updeployment_release_path.stdout }}/{{ item }}"
+    path: "{{ deploy_release_path.stdout }}/{{ item }}"
   with_flattened:
-    - "{{ updeployment_shared_paths }}"
-    - "{{ updeployment_shared_files }}"
+    - "{{ deploy_shared_paths }}"
+    - "{{ deploy_shared_files }}"
 
 # Ensure shared path exists
 - name: UPYUN-DEV-DEPLOY | Ensure shared paths exists
   file:
     state: directory
-    path: "{{ updeployment_deploy_to }}/shared/{{ item }}"
-  with_items: "{{ updeployment_shared_paths }}"
+    path: "{{ deploy_to }}/shared/{{ item }}"
+  with_items: "{{ deploy_shared_paths }}"
 
 # Ensure basedir shared files exists
 - name: UPYUN-DEV-DEPLOY | Ensure basedir shared files exists
   file:
     state: directory
-    path: "{{ updeployment_deploy_to }}/shared/{{ item | dirname }}"
-  with_items: "{{ updeployment_shared_files }}"
+    path: "{{ deploy_to }}/shared/{{ item | dirname }}"
+  with_items: "{{ deploy_shared_files }}"
 
 # Symlinks shared paths and files
 - name: UPYUN-DEV-DEPLOY | Create softlinks for shared paths and files
   file:
     state: link
-    path: "{{ updeployment_release_path.stdout }}/{{ item }}"
+    path: "{{ deploy_release_path.stdout }}/{{ item }}"
     src: "{{ item | regex_replace('[^\\/]*', '..') }}/../shared/{{ item }}"
   with_flattened:
-    - "{{ updeployment_shared_paths }}"
-    - "{{ updeployment_shared_files }}"
+    - "{{ deploy_shared_paths }}"
+    - "{{ deploy_shared_files }}"
 
 # Remove previous .rsync-filter file (rsync current deployment)
 - name: UPYUN-DEV-DEPLOY | Ensure .rsync-filter is absent
   file:
     state: absent
-    path: "{{ updeployment_release_path.stdout }}/.rsync-filter"
-  when: updeployment_current_via == "rsync"
+    path: "{{ deploy_release_path.stdout }}/.rsync-filter"
+  when: deploy_current_via == "rsync"
 
 # Setup .rsync-filter file for current rsync deployment (exclude shared folders for rsync current deployment)
 - name: UPYUN-DEV-DEPLOY | Setup .rsync-filter with shared-folders
   lineinfile:
-    dest: "{{ updeployment_release_path.stdout }}/.rsync-filter"
+    dest: "{{ deploy_release_path.stdout }}/.rsync-filter"
     line: "- /{{ item }}"
     create: yes
-  with_items: "{{ updeployment_shared_paths }}"
-  when: updeployment_current_via == "rsync"
+  with_items: "{{ deploy_shared_paths }}"
+  when: deploy_current_via == "rsync"

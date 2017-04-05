@@ -1,14 +1,14 @@
 ---
-- name: "UPYUN-DEV-DEPLOY | rsync 从 {{ updeployment_rsync_src }} 同步代码到 {{ updeployment_deploy_to }}"
-  shell: rsync {{ updeployment_rsync_extra_params }} {{ updeployment_rsync_src }} {{ updeployment_deploy_to }}
+- name: "UPYUN-DEV-DEPLOY | rsync 从 {{ deploy_rsync_src }} 同步代码到 {{ deploy_to }}"
+  shell: rsync {{ deploy_rsync_extra_params }} {{ deploy_rsync_src }} {{ deploy_to }}
   args:
-    chdir: "{{ updeployment_deploy_to }}"
+    chdir: "{{ deploy_to }}"
     executable: /bin/bash
 
-- name: "UPYUN-DEV-DEPLOY | 拷贝 project 中的项目源码到 {{ updeployment_release_path.stdout }}"
-  command: cp -a {{ updeployment_deploy_to }}/project {{ updeployment_release_path.stdout }}
+- name: "UPYUN-DEV-DEPLOY | 拷贝 project 中的项目源码到 {{ deploy_release_path.stdout }}"
+  command: cp -a {{ deploy_to }}/project {{ deploy_release_path.stdout }}
 
 - name: UPYUN-DEV-DEPLOY | 删除 project 目录
   file:
     state: absent
-    path: "{{ updeployment_deploy_to }}/project"
+    path: "{{ deploy_to }}/project"

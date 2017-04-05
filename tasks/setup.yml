@@ -1,33 +1,33 @@
 ---
 # Setup folders
-- name: "UPYUN-DEV-DEPLOY | 创建项目根目录: {{ updeployment_deploy_to }}"
+- name: "UPYUN-DEV-DEPLOY | 创建项目根目录: {{ deploy_to }}"
   file:
     state: directory
-    path: "{{ updeployment_deploy_to }}"
+    path: "{{ deploy_to }}"
 
 - name: UPYUN-DEV-DEPLOY | 设置发布版本目录
-  command: echo "{{ updeployment_deploy_to }}/{{ updeployment_version_dir }}"
-  register: updeployment_releases_path
+  command: echo "{{ deploy_to }}/{{ deploy_version_dir }}"
+  register: deploy_releases_path
 
 - name: UPYUN-DEV-DEPLOY | 设置共享目录
-  command: echo "{{ updeployment_deploy_to }}/shared"
-  register: updeployment_shared_path
+  command: echo "{{ deploy_to }}/shared"
+  register: deploy_shared_path
 
 - name: UPYUN-DEV-DEPLOY | 设置临时目录
   command: echo "{{ dest }}/tmp"
-  register: updeployment_tmp
+  register: deploy_tmp
 
-# - name: "UPYUN-DEV-DEPLOY | 创建临时目录: {{ updeployment_tmp.stdout }}"
+# - name: "UPYUN-DEV-DEPLOY | 创建临时目录: {{ deploy_tmp.stdout }}"
 #   file:
 #     state: directory
-#     path: "{{ updeployment_tmp.stdout }}"
+#     path: "{{ deploy_tmp.stdout }}"
 
-- name: "UPYUN-DEV-DEPLOY | 创建发布版本目录: {{ updeployment_releases_path.stdout }}"
+- name: "UPYUN-DEV-DEPLOY | 创建发布版本目录: {{ deploy_releases_path.stdout }}"
   file:
     state: directory
-    path: "{{ updeployment_releases_path.stdout }}"
+    path: "{{ deploy_releases_path.stdout }}"
 
-# - name: "UPYUN-DEV-DEPLOY | 创建共享目录 {{ updeployment_shared_path.stdout }}"
+# - name: "UPYUN-DEV-DEPLOY | 创建共享目录 {{ deploy_shared_path.stdout }}"
 #   file:
 #     state: directory
-#     path: "{{ updeployment_shared_path.stdout }}"
+#     path: "{{ deploy_shared_path.stdout }}"

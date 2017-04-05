@@ -2,18 +2,18 @@
 # Update code deployment step
 - name: "UPYUN-DEV-DEPLOY | 生成默认的待发布版本"
   set_fact:
-    updeployment_release_version: "{{ lookup('pipe', 'date -u +%Y%m%d%H%M%SZ') }}"
+    deploy_release_version: "{{ lookup('pipe', 'date -u +%Y%m%d%H%M%SZ') }}"
   run_once: true
-  when: updeployment_release_version is not defined
+  when: deploy_release_version is not defined
   delegate_to: 127.0.0.1
 
 - name: UPYUN-DEV-DEPLOY | 设置待发布版本目录
-  command: echo "{{ updeployment_releases_path.stdout }}/{{ updeployment_release_version }}"
-  register: updeployment_release_path
+  command: echo "{{ deploy_releases_path.stdout }}/{{ deploy_release_version }}"
+  register: deploy_release_path
 
 - include: "rsync.yml"
 
-- name: "UPYUN-DEV-DEPLOY | 将待发布版本信息写入 {{ updeployment_release_path.stdout }}/REVISION"
+- name: "UPYUN-DEV-DEPLOY | 将待发布版本信息写入 {{ deploy_release_path.stdout }}/REVISION"
   copy:
-    content: "{{ updeployment_release_version }}"
-    dest: "{{ updeployment_release_path.stdout }}/REVISION"
+    content: "{{ deploy_release_version }}"
+    dest: "{{ deploy_release_path.stdout }}/REVISION"

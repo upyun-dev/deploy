@@ -1,16 +1,16 @@
 ---
 - stat:
-    path: "{{ updeployment_deploy_to }}/{{ updeployment_current_dir }}"
+    path: "{{ deploy_to }}/{{ deploy_current_dir }}"
   register: stat_current_dir
 
 - name: UPYUN-DEV-DEPLOY | 删除 current 目录 (如果 current 不是符号链接)
   file:
     state: absent
-    path: "{{ updeployment_deploy_to }}/{{ updeployment_current_dir }}"
+    path: "{{ deploy_to }}/{{ deploy_current_dir }}"
   when: stat_current_dir.stat.isdir is defined and stat_current_dir.stat.isdir
 
 - name: UPYUN-DEV-DEPLOY | current 符号链接指向新的代码版本
   file:
     state: link
-    path: "{{ updeployment_deploy_to }}/{{ updeployment_current_dir }}"
-    src: "./{{ updeployment_version_dir }}/{{ updeployment_release_version }}"
+    path: "{{ deploy_to }}/{{ deploy_current_dir }}"
+    src: "./{{ deploy_version_dir }}/{{ deploy_release_version }}"

@@ -1,37 +1,37 @@
 ---
 
-updeployment_rsync_src: "localhost"
-updeployment_rsync_extra_params: ""
+deploy_rsync_src: "localhost"
+deploy_rsync_extra_params: ""
 
 # Path where the code must be deployed to
-updeployment_deploy_to: "/var/www/my-app"
+deploy_to: "/var/www/my-app"
 
 # Folder name for the releases
-updeployment_version_dir: "releases"
+deploy_version_dir: "releases"
 
 # Softlink name for the current release
-updeployment_current_dir: "current"
+deploy_current_dir: "current"
 
 # Current directory deployment strategy
-updeployment_current_via: "symlink"
+deploy_current_via: "symlink"
 
 # Number of releases to keep in your hosts, if 0, unlimited releases will be kept
-updeployment_keep_releases: 0
+deploy_keep_releases: 0
 
 # # Path where the code to deploy is
-# updeployment_deploy_from: "{{ playbook_dir }}"
+# deploy_deploy_from: "{{ playbook_dir }}"
 
 # # Shared paths to symlink to release dir
-# updeployment_shared_paths: []
+# deploy_shared_paths: []
 
 # # Shared files to symlink to release dir
-# updeployment_shared_files: []
+# deploy_shared_files: []
 
 # # Deployment strategies variables
 
 # ## RSYNC push strategy
-# updeployment_rsync_extra_params: ""
+# deploy_rsync_extra_params: ""
 # ## put user@ for the remote paths. If you have a custom ssh config to define
 # ## the remote user for a host that does not match the inventory user,
 # ## you should set this parameter to "no".
-# updeployment_rsync_set_remote_user: yes
+# deploy_rsync_set_remote_user: yes
